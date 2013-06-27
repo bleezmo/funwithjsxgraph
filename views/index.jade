@@ -1,4 +1,5 @@
 extends layout
 
 block content
-  h1= title
+  div(ng-controller='jsxGraphController')
+    div(jsx-graph, board-params="boardParams")

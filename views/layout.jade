@@ -3,5 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    link(rel='stylesheet', href='/stylesheets/jsxgraph.css')
+    script(src='/javascripts/lib/angular.js')
+    script(src='/javascripts/lib/jsxgraphcore.js')
+    script(src='/javascripts/lib/underscore-min.js')
+
+    script(src='/javascripts/Canvas.js')
+    script(src='/javascripts/jsxgraph-directive.js')
+  body(ng-app='jsxgraph')
     block content
