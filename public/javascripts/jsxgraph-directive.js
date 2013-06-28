@@ -15,25 +15,26 @@ app.directive('jsxGraph',function(Canvas){
 			var range = scope.boardParams.range
 			if(domain && range) {
 		    	var canvas = new Canvas(JXG.JSXGraph.initBoard('box', {
-		    		boundingbox: [(0 - domain), range, domain, (0 - range)], 
-		    		axis:true
+		    		boundingbox: [(0 - domain), range, domain, (0 - range)], grid: true, axis: true, keepaspectratio: true
 		    	}));
 		    	//add mouse click listener to create points
 				canvas.on('up', function(e) {
 					var coords = canvas.getMouseCoords(e)
 			 		var pointCollision = canvas.pointCollision(coords)
-			        if (!pointCollision) {
-			        	if(canvas.points.length == scope.maxPoints){
-			        		canvas.popPoint();
-			        	}
-			        	canvas.addPoint(coords)
-			        	if(canvas.points.length == 2){
-			        		var line = canvas.makeLine();
+			        if (!pointCollision && (canvas.points.length != scope.maxPoints)) {
+			        	var point = canvas.addPoint(coords)
+						point.on("move", function(){
+							function interpolate(num){
+								return Math.round(num/scope.scale)*scope.scale	
+							}							
+							point.moveTo([interpolate(point.X()),interpolate(point.Y())])
+					        scope.pointsCallback(canvas.prettifyPoints())							
+						})	
+						scope.pointsCallback(canvas.prettifyPoints())		        	
+				        if(canvas.points.length == 2){
+				        	var line = canvas.makeLine();
 						}
-			        }else{
-			        	canvas.removePoint(pointCollision)
 			        }
-			        scope.pointsCallback(canvas.prettifyPoints())
 			    })
 			    canvas.on('move', function(e){
 			    	var coords = canvas.getMouseCoords(e)
@@ -56,10 +57,11 @@ app.controller('jsxGraphController', ['$scope','$timeout',function($scope,$timeo
 		})
 		if(points.length == 2){
 			var slope = (points[0].y - points[1].y) / (points[0].x - points[1].x)
-			var yintercept = points[0].y / (points[0].x * slope)
+			var yintercept = points[0].y - (points[0].x * slope)
 			$scope.equation = "y = "+slope+"x + "+yintercept;
 		}
 	}
+	//refresh periodically
 	$timeout(redraw, 500)
 	function redraw(){
 		$scope.$digest()

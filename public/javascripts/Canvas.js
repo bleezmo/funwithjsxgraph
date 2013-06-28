@@ -19,6 +19,7 @@ angular.module('jsxgraph', []).factory('Canvas', function(){
 		this.addPoint = function(coords){
 			var point = board.create('point', [coords.usrCoords[1], coords.usrCoords[2]]);
 			this.points.push(point)
+			return point;
 		}
 		//remove the last point
 		this.popPoint = function(){
@@ -40,7 +41,7 @@ angular.module('jsxgraph', []).factory('Canvas', function(){
 		}
 		this.prettifyPoints = function(){
 			return _.map(this.points, function(p){
-				return {name: p.name, x: p.initialCoords.usrCoords[1], y: p.initialCoords.usrCoords[2]}
+				return {name: p.name, x: p.coords.usrCoords[1], y: p.coords.usrCoords[2]}
 			})
 		}
 	}
