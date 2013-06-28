@@ -2,11 +2,16 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/jsxgraph.css')
+    link(rel='stylesheet', href='/stylesheets/lib/jsxgraph.css')
+    link(rel='stylesheet', href='/stylesheets/lib/bootstrap.min.css')
+
+    script(src='/javascripts/lib/jquery-2.0.2.min.js')
+    script(src='/javascripts/lib/bootstrap.min.js')
     script(src='/javascripts/lib/angular.js')
     script(src='/javascripts/lib/jsxgraphcore.js')
     script(src='/javascripts/lib/underscore-min.js')
+
+    link(rel='stylesheet', href='/stylesheets/style.css')
 
     script(src='/javascripts/Canvas.js')
     script(src='/javascripts/jsxgraph-directive.js')

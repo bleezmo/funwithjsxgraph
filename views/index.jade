@@ -2,4 +2,26 @@ extends layout
 
 block content
   div(ng-controller='jsxGraphController')
-    div(jsx-graph, board-params="boardParams")
+    div(class="row")
+      div(class="span2")
+        p Point A:
+        p x:
+        input(type="text", style="width: 80px;", ng-model="points.A.x")
+        p y: 
+        input(type="text", style="width: 80px;", ng-model="points.A.y")
+      div(class="span2")
+        p Point B:
+        p x: 
+        input(type="text", style="width: 80px;", ng-model="points.B.x")
+        p y: 
+        input(type="text", style="width: 80px;", ng-model="points.B.y")
+      div(class="span5")
+        p {{"x: "+mouseCoords.x+" y: "+mouseCoords.y}}
+        div(jsx-graph, 
+        board-params="boardParams", 
+        points-callback="updatePoints", 
+        max-points="2", 
+        mouse-ptr="mouseCoords", 
+        scale="3")
+    div(class="row")
+      p {{equation}}
